@@ -6,8 +6,8 @@ Johan Söderlund
 
 ### Länk till webbsidan:
 
-[GitHub Pages]()
+[GitHub Pages](link)
 
-[Netlify]()
+[Netlify](link)
 
 ## Information:
