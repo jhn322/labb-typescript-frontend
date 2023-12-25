@@ -1,4 +1,4 @@
-# Mortgage Calculator - Avancerad frontendutveckling och Typescript
+# Labb: Typescript - Avancerad frontendutveckling och Typescript
 
 ## Sida skapad av:
 
@@ -6,8 +6,8 @@ Johan Söderlund
 
 ### Länk till webbsidan:
 
-[GitHub Pages](link)
+[GitHub Pages](https://jhn322.github.io/typescript-frontend/)
 
-[Netlify](link)
+[Netlify](https://jhn-typescript.netlify.app/)
 
 ## Information:
