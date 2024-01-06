@@ -9,37 +9,44 @@
 </head>
 
 <body>
+
+    <!-- Bolånekalkylator -->
     <div class="container">
-        <!-- Mortgage calculation -->
-        <section class="left-side">
-            <h1 class="headline">Mortgage Calculator</h1>
+        <section class="input-side">
+            <h1 class="headline">Bolånekalkylator</h1>
+
+            <!-- Bolån amount -->
             <form id="mortgageForm">
-                <div class="input-group">
-                    <label for="mortgageAmount">Mortgage Amount</label>
-                    <input type="number" id="mortgageAmount" placeholder="Enter amount" required>
+                <div class="input-group input-group-1">
+                    <label for="mortgageAmount">Lånebelopp (kr)</label>
+                    <input type="number" id="mortgageAmount" placeholder="Skriv in belopp" required>
                 </div>
-                <div class="input-group">
-                    <label for="interestRate">Interest Rate (%)</label>
-                    <input type="number" id="interestRate" step="0.01" placeholder="Enter rate" required>
+
+                <!-- Interest rate -->
+                <div class="input-group input-group-2">
+                    <label for="interestRate">Ränta (%)</label>
+                    <input type="number" id="interestRate" step="0.01" placeholder="Skriv in ränta" required>
                 </div>
-                <div class="input-group">
-                    <label for="loanTerm">Loan Term (years)</label>
-                    <input type="number" id="loanTerm" placeholder="Enter term" required>
+
+                <!-- Loan term -->
+                <div class="input-group input-group-3">
+                    <label for="loanTerm">Låneperiod (år)</label>
+                    <input type="number" id="loanTerm" placeholder="Skriv in period" required>
                 </div>
-                <button type="submit">Calculate</button>
+                <button type="submit">Räkna ut</button>
             </form>
         </section>
 
-        <!-- Mortgage results -->
-        <section class="right-side">
-            <h2 class="results-headline">Calculations</h2>
+        <!-- Bolån results -->
+        <section class="results-side">
+            <h2 class="results-headline">Uträkning</h2>
             <div class="results-container">
-                <p class="results" id="results">Results:</p>
+                <p class="results" id="results">Resultat:</p>
             </div>
         </section>
     </div>
 
-    <script src="./ts/app.ts"></script>
+    <script src="./js/app.js"></script>
 </body>
 
 </html>
