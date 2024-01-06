@@ -9,8 +9,25 @@ var resultDisplay = document.getElementById("results");
 function calculateMortgage(event) {
     event.preventDefault();
     var mortgageAmount = parseFloat(mortgageAmountInput.value);
-    var interestRate = parseFloat(interestRateInput.value) / 100 / 12;
-    var loanTerm = parseFloat(loanTermInput.value) * 12;
+    var interestRate = parseFloat(interestRateInput.value);
+    var loanTerm = parseFloat(loanTermInput.value);
+    // If statements to prevent negative inputs for mortgage amount
+    if (mortgageAmount <= 0) {
+        resultDisplay.textContent = "Skriv inte in ett negativt lånebelopp.";
+        return;
+    }
+    // If statements to prevent negative or unrealistically high inputs for interest rate
+    if (interestRate < 0 || interestRate > 100) {
+        resultDisplay.textContent = "Skriv in ett ränteantal mellan 0-100%";
+        return;
+    }
+    // If statements to prevent negative or unrealistically high inputs for loan term
+    if (loanTerm <= 0 || loanTerm > 80) {
+        resultDisplay.textContent = "Skriv in en realistisk återbetalningsperiod";
+        return;
+    }
+    var monthlyInterestRate = interestRate / 100 / 12;
+    var loanTermMonths = loanTerm * 12;
     var mortgage = (mortgageAmount * interestRate * Math.pow(1 + interestRate, loanTerm)) /
         (Math.pow(1 + interestRate, loanTerm) - 1);
     resultDisplay.textContent = "Resultat: ".concat(mortgage.toFixed(2), " kr/m\u00E5nad");

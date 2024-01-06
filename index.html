@@ -19,19 +19,19 @@
             <form id="mortgageForm">
                 <div class="input-group input-group-1">
                     <label for="mortgageAmount">Lånebelopp (kr)</label>
-                    <input type="number" id="mortgageAmount" placeholder="Skriv in belopp" required>
+                    <input type="number" id="mortgageAmount" placeholder="Skriv in belopp" required min="0">
                 </div>
 
                 <!-- Interest rate -->
                 <div class="input-group input-group-2">
                     <label for="interestRate">Ränta (%)</label>
-                    <input type="number" id="interestRate" step="0.01" placeholder="Skriv in ränta" required>
+                    <input type="number" id="interestRate" step="0.01" placeholder="Skriv in ränta" required min="0">
                 </div>
 
                 <!-- Loan term -->
                 <div class="input-group input-group-3">
                     <label for="loanTerm">Lånetid (år)</label>
-                    <input type="number" id="loanTerm" placeholder="Skriv in återbetalningstid" required>
+                    <input type="number" id="loanTerm" placeholder="Skriv in återbetalningstid" required min="0">
                 </div>
                 <button type="submit">Räkna ut</button>
             </form>
@@ -39,9 +39,9 @@
 
         <!-- Bolån results -->
         <section class="results-side">
-            <h2 class="results-headline">Uträkning</h2>
+            <h2 class="results-headline">Uträkning av ditt bolån</h2>
             <div class="results-container">
-                <p class="results" id="results">Resultat:</p>
+                <p class="results" id="results"></p>
             </div>
         </section>
     </div>

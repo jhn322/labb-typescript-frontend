@@ -18,8 +18,29 @@ function calculateMortgage(event: Event) {
   event.preventDefault();
 
   const mortgageAmount = parseFloat(mortgageAmountInput.value);
-  const interestRate = parseFloat(interestRateInput.value) / 100 / 12;
-  const loanTerm = parseFloat(loanTermInput.value) * 12;
+  const interestRate = parseFloat(interestRateInput.value);
+  const loanTerm = parseFloat(loanTermInput.value);
+
+  // If statements to prevent negative inputs for mortgage amount
+  if (mortgageAmount <= 0) {
+    resultDisplay.textContent = "Skriv inte in ett negativt lånebelopp.";
+    return;
+  }
+
+  // If statements to prevent negative or unrealistically high inputs for interest rate
+  if (interestRate < 0 || interestRate > 100) {
+    resultDisplay.textContent = "Skriv in ett ränteantal mellan 0-100%";
+    return;
+  }
+
+  // If statements to prevent negative or unrealistically high inputs for loan term
+  if (loanTerm <= 0 || loanTerm > 80) {
+    resultDisplay.textContent = "Skriv in en realistisk återbetalningsperiod";
+    return;
+  }
+
+  const monthlyInterestRate = interestRate / 100 / 12;
+  const loanTermMonths = loanTerm * 12;
 
   const mortgage =
     (mortgageAmount * interestRate * Math.pow(1 + interestRate, loanTerm)) /
