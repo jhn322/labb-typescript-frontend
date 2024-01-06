@@ -17,25 +17,32 @@ const resultDisplay = document.getElementById(
 function calculateMortgage(event: Event) {
   event.preventDefault();
 
+  const invalidInput = [];
+
   const mortgageAmount = parseFloat(mortgageAmountInput.value);
   const interestRate = parseFloat(interestRateInput.value);
   const loanTerm = parseFloat(loanTermInput.value);
 
   // If statements to prevent negative inputs for mortgage amount
   if (mortgageAmount <= 0) {
-    resultDisplay.textContent = "Skriv inte in ett negativt lånebelopp.";
-    return;
+    invalidInput.push("Skriv inte in ett negativt lånebelopp.");
   }
 
   // If statements to prevent negative or unrealistically high inputs for interest rate
   if (interestRate < 0 || interestRate > 100) {
-    resultDisplay.textContent = "Skriv in ett ränteantal mellan 0-100%";
-    return;
+    invalidInput.push("Skriv in ett ränteantal mellan 0-100%.");
   }
 
   // If statements to prevent negative or unrealistically high inputs for loan term
   if (loanTerm <= 0 || loanTerm > 80) {
-    resultDisplay.textContent = "Skriv in en realistisk återbetalningsperiod";
+    invalidInput.push("Skriv in en realistisk återbetalningsperiod.");
+  }
+
+  if (invalidInput.length > 0) {
+    const errorMessages = invalidInput
+      .map((message) => `<li>${message}</li>`)
+      .join("");
+    resultDisplay.innerHTML = `<span class='error-message'>Fel:<br><ul>${errorMessages}</ul></span>`;
     return;
   }
 

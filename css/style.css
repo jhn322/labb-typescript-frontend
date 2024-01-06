@@ -96,6 +96,12 @@ button:hover {
   margin-top: 1rem;
 }
 
+.error-message {
+  padding-top: 4.5rem;
+  color: red;
+  font-size: 1.1rem;
+}
+
 /* Desktop media */
 @media only screen and (min-width: 1200px) {
   .container {

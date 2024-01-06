@@ -8,22 +8,27 @@ var resultDisplay = document.getElementById("results");
 // Function to calculate the mortgage
 function calculateMortgage(event) {
     event.preventDefault();
+    var invalidInput = [];
     var mortgageAmount = parseFloat(mortgageAmountInput.value);
     var interestRate = parseFloat(interestRateInput.value);
     var loanTerm = parseFloat(loanTermInput.value);
     // If statements to prevent negative inputs for mortgage amount
     if (mortgageAmount <= 0) {
-        resultDisplay.textContent = "Skriv inte in ett negativt lånebelopp.";
-        return;
+        invalidInput.push("Skriv inte in ett negativt lånebelopp.");
     }
     // If statements to prevent negative or unrealistically high inputs for interest rate
     if (interestRate < 0 || interestRate > 100) {
-        resultDisplay.textContent = "Skriv in ett ränteantal mellan 0-100%";
-        return;
+        invalidInput.push("Skriv in ett ränteantal mellan 0-100%.");
     }
     // If statements to prevent negative or unrealistically high inputs for loan term
     if (loanTerm <= 0 || loanTerm > 80) {
-        resultDisplay.textContent = "Skriv in en realistisk återbetalningsperiod";
+        invalidInput.push("Skriv in en realistisk återbetalningsperiod.");
+    }
+    if (invalidInput.length > 0) {
+        var errorMessages = invalidInput
+            .map(function (message) { return "<li>".concat(message, "</li>"); })
+            .join("");
+        resultDisplay.innerHTML = "<span class='error-message'>Fel:<br><ul>".concat(errorMessages, "</ul></span>");
         return;
     }
     var monthlyInterestRate = interestRate / 100 / 12;
