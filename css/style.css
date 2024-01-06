@@ -32,11 +32,7 @@ html {
 .input-side {
   width: 100%;
   height: 50%;
-  background: linear-gradient(
-    to bottom right,
-    rgb(69, 8, 69),
-    rgb(124, 40, 124)
-  );
+  background: linear-gradient(to bottom right, #450845, #7c287c);
   padding: 1.5em;
   color: #f0f0f0;
 }
@@ -70,7 +66,7 @@ button {
 button {
   margin-top: 3.3rem;
   height: 100px;
-  background-color: rgb(150, 16, 150);
+  background-color: #961096;
   color: #f0f0f0;
   cursor: pointer;
   transition: background-color 0.3s ease;
@@ -84,7 +80,7 @@ button:hover {
 .results-side {
   width: 100%;
   height: 100%;
-  background-color: rgb(255, 255, 97);
+  background-color: #ffff61;
   padding: 1.5em;
 }
 
@@ -108,6 +104,27 @@ button:hover {
   font-size: 2rem;
   margin-top: 1rem;
 }
+
+.amortization-table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-top: -0.4rem;
+  margin-right: 17.4rem;
+  display: none;
+}
+
+.amortization-table th,
+.amortization-table td {
+  border: 1px solid #1a1a1a;
+  padding: 5px;
+  text-align: center;
+}
+
+.amortization-table th {
+  background-color: #b1b12c;
+}
+
+/* Add more styles as needed */
 
 /* Desktop media */
 @media only screen and (min-width: 1200px) {
@@ -161,5 +178,9 @@ button:hover {
   .error-message {
     padding-top: 4.5rem;
     font-size: 1.1rem;
+  }
+
+  .amortization-table {
+    margin-right: 9rem;
   }
 }
