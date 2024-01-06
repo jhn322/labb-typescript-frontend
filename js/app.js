@@ -33,8 +33,10 @@ function calculateMortgage(event) {
     }
     var monthlyInterestRate = interestRate / 100 / 12;
     var loanTermMonths = loanTerm * 12;
-    var mortgage = (mortgageAmount * interestRate * Math.pow(1 + interestRate, loanTerm)) /
-        (Math.pow(1 + interestRate, loanTerm) - 1);
+    var mortgage = (mortgageAmount *
+        monthlyInterestRate *
+        Math.pow(1 + monthlyInterestRate, loanTermMonths)) /
+        (Math.pow(1 + monthlyInterestRate, loanTermMonths) - 1);
     resultDisplay.textContent = "Resultat: ".concat(mortgage.toFixed(2), " kr/m\u00E5nad");
 }
 mortgageForm.addEventListener("submit", calculateMortgage);

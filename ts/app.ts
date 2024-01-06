@@ -50,8 +50,10 @@ function calculateMortgage(event: Event) {
   const loanTermMonths = loanTerm * 12;
 
   const mortgage =
-    (mortgageAmount * interestRate * Math.pow(1 + interestRate, loanTerm)) /
-    (Math.pow(1 + interestRate, loanTerm) - 1);
+    (mortgageAmount *
+      monthlyInterestRate *
+      Math.pow(1 + monthlyInterestRate, loanTermMonths)) /
+    (Math.pow(1 + monthlyInterestRate, loanTermMonths) - 1);
 
   resultDisplay.textContent = `Resultat: ${mortgage.toFixed(2)} kr/månad`;
 }
