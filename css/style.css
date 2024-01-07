@@ -16,6 +16,7 @@ html {
   height: 100%;
 }
 
+/* Main headline */
 .headline {
   display: flex;
   align-items: center;
@@ -23,12 +24,14 @@ html {
   font-size: 4rem;
 }
 
+/* Main container */
 .container {
   display: flex;
   flex-direction: column;
   height: 100%;
 }
 
+/* Left side with inputs */
 .input-side {
   width: 100%;
   height: 50%;
@@ -41,6 +44,7 @@ html {
   margin-bottom: 15px;
 }
 
+/* Styling for all labels */
 label {
   display: block;
   margin-bottom: 5px;
@@ -53,6 +57,7 @@ input:focus {
   box-shadow: 0 0 5px rgb(255, 255, 97);
 }
 
+/* Styling for all input fields */
 input[type="number"],
 button {
   width: 100%;
@@ -63,6 +68,7 @@ button {
   font-size: 2rem;
 }
 
+/* Styling for button */
 button {
   margin-top: 1rem;
   margin-bottom: 2rem;
@@ -78,13 +84,17 @@ button:hover {
 }
 
 /*------------------Results section------------------*/
+/* Right side with generated Bolån by user */
 .results-side {
   width: 100%;
   height: auto;
+  flex: 1;
+  overflow-y: auto;
   background-color: #ffff61;
   padding: 1.5em;
 }
 
+/* Second headline */
 .results-headline {
   display: flex;
   align-items: center;
@@ -92,6 +102,7 @@ button:hover {
   font-size: 4rem;
 }
 
+/* Flexbox for result page */
 .results {
   display: flex;
   align-items: center;
@@ -100,21 +111,23 @@ button:hover {
   font-size: 2rem;
 }
 
+/* Invalid input text styling */
 .error-message {
-  color: red;
+  color: #e40707;
   font-size: 2rem;
   margin-top: 1rem;
 }
 
+/* Sizing for amortization table */
 .amortization-table {
   border-collapse: collapse;
   width: 100%;
   margin-top: 1rem;
-  margin-right: 17.4rem;
   display: none;
   font-size: 1.1rem;
 }
 
+/* Styling for amortization table */
 .amortization-table th,
 .amortization-table td {
   border: 1px solid #1a1a1a;
@@ -139,17 +152,20 @@ button:hover {
 
 /* Desktop media */
 @media only screen and (min-width: 1200px) {
+  /* Desktop flex */
   .container {
     display: flex;
     flex-direction: row;
     min-height: 100vh;
   }
 
+  /* adjusted width height */
   .input-side {
     width: 60%;
     height: auto;
   }
 
+  /* Handles overflow of table */
   .results-side {
     flex: 1;
     overflow-y: auto;
@@ -192,9 +208,9 @@ button:hover {
     font-size: 1.1rem;
   }
 
+  /* Adjust table positioning */
   .amortization-table {
     margin-top: 1rem;
-    margin-right: 17.4rem;
     display: none;
     font-size: 1.1rem;
   }
