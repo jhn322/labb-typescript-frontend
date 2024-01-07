@@ -15,20 +15,20 @@
         <section class="input-side">
             <h1 class="headline">Bolånekalkylator</h1>
 
-            <!-- Bolån amount -->
+            <!-- Bolån amount input -->
             <form id="mortgageForm">
                 <div class="input-group input-group-1">
                     <label for="mortgageAmount">Lånebelopp (kr)</label>
                     <input type="number" id="mortgageAmount" placeholder="Skriv in belopp" required min="0">
                 </div>
 
-                <!-- Interest rate -->
+                <!-- Bolån rate input -->
                 <div class="input-group input-group-2">
                     <label for="interestRate">Ränta (%)</label>
                     <input type="number" id="interestRate" step="0.01" placeholder="Skriv in ränta" required min="0">
                 </div>
 
-                <!-- Loan term -->
+                <!-- Bolån term input -->
                 <div class="input-group input-group-3">
                     <label for="loanTerm">Lånetid (år)</label>
                     <input type="number" id="loanTerm" placeholder="Skriv in återbetalningstid" required min="0">
@@ -43,6 +43,7 @@
             <div class="results-container">
                 <div class="summary" id="summary"></div>
                 <div class="table-container">
+                    <!-- Amortering table -->
                     <table class="amortization-table" id="amortizationTable">
                         <thead>
                             <tr>
