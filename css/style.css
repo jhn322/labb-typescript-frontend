@@ -24,6 +24,17 @@ html {
   font-size: 4rem;
 }
 
+/* P text under headline */
+.headline-summary {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+}
+
+.summary-text {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
 /* Main container */
 .container {
   display: flex;
@@ -173,6 +184,10 @@ button:hover {
 
   .headline {
     font-size: 2rem;
+  }
+
+  .summary-text {
+    max-width: 1100px;
   }
 
   .input-group {
