@@ -32,7 +32,7 @@ function calculateMortgage(event: Event) {
 
   // If validation with error message to prevent negative or unrealistic numbers for inputs
   if (mortgageAmount <= 0) {
-    invalidInput.push("Skriv inte in ett negativt lånebelopp.");
+    invalidInput.push("Skriv in ett lånebelopp av minst 1.");
   }
 
   if (interestRate < 0 || interestRate > 100) {
