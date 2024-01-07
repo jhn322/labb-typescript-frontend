@@ -9,9 +9,10 @@ const interestRateInput = document.getElementById(
   "interestRate"
 ) as HTMLInputElement;
 const loanTermInput = document.getElementById("loanTerm") as HTMLInputElement;
-const resultDisplay = document.getElementById(
-  "results"
-) as HTMLParagraphElement;
+const summaryDisplay = document.getElementById("summary") as HTMLDivElement;
+const tableElement = document.getElementById(
+  "amortizationTable"
+) as HTMLTableElement;
 
 // Function to calculate the mortgage
 function calculateMortgage(event: Event) {
@@ -42,7 +43,7 @@ function calculateMortgage(event: Event) {
     const errorMessages = invalidInput
       .map((message) => `<li>${message}</li>`)
       .join("");
-    resultDisplay.innerHTML = `<span class='error-message'>Fel:<br><ul>${errorMessages}</ul></span>`;
+    summaryDisplay.innerHTML = `<span class='error-message'>Fel:<br><ul>${errorMessages}</ul></span>`;
     return;
   }
 
@@ -55,7 +56,56 @@ function calculateMortgage(event: Event) {
       Math.pow(1 + monthlyInterestRate, loanTermMonths)) /
     (Math.pow(1 + monthlyInterestRate, loanTermMonths) - 1);
 
-  resultDisplay.textContent = `Resultat: ${mortgage.toFixed(2)} kr/månad`;
+  const totalPayment = mortgage * loanTermMonths;
+  const totalInterest = totalPayment - mortgageAmount;
+
+  let remainingLoan = mortgageAmount;
+  const amortizationPlan = [];
+
+  for (let i = 1; i <= loanTermMonths; i++) {
+    const interestPayment = remainingLoan * monthlyInterestRate;
+    const principalPayment = mortgage - interestPayment;
+
+    remainingLoan -= principalPayment;
+
+    amortizationPlan.push({
+      month: i,
+      payment: mortgage,
+      principal: principalPayment,
+      interest: interestPayment,
+      remainingLoan: remainingLoan,
+    });
+  }
+
+  const summaryText = `
+    Resultat: <strong>${mortgage.toFixed(2)} kr/månad.</strong><br>
+    Totala räntekostnaden: <strong>${totalInterest.toFixed(
+      2
+    )} kr</strong> över <strong>${loanTerm} år.</strong><br>
+    Amorteringsplan:
+`;
+
+  summaryDisplay.innerHTML = summaryText;
+
+  let output = "";
+
+  amortizationPlan.forEach((payment) => {
+    output += `
+      <tr>
+        <td>${payment.month}</td>
+        <td>${payment.payment.toFixed(2)}</td>
+        <td>${payment.interest.toFixed(2)}</td>
+        <td>${payment.principal.toFixed(2)}</td>
+        <td>${payment.remainingLoan.toFixed(2)}</td>
+      </tr>`;
+  });
+
+  const tableBody = document.getElementById(
+    "tableBody"
+  ) as HTMLTableSectionElement;
+  tableBody.innerHTML = output;
+
+  tableElement.style.display = "table";
 }
 
 mortgageForm.addEventListener("submit", calculateMortgage);
