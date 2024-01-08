@@ -6,51 +6,71 @@ var interestRateInput = document.getElementById("interestRate");
 var loanTermInput = document.getElementById("loanTerm");
 var summaryDisplay = document.getElementById("summary");
 var tableElement = document.getElementById("amortizationTable");
+// Function to validate if a string represents a valid number
+function isValidNumber(value) {
+    return !isNaN(parseFloat(value)) && isFinite(parseFloat(value));
+}
+// Function to validate if a string represents a positive number
+function isValidPositiveNumber(value) {
+    var parsed = parseFloat(value);
+    return !isNaN(parsed) && isFinite(parsed) && parsed > 0;
+}
+// Function to validate input values
+function validateInputs(mortgageAmount, interestRate, loanTerm) {
+    var errorMessages = [];
+    // Different if statements for error messages
+    if (!isValidPositiveNumber(mortgageAmount)) {
+        errorMessages.push("Skriv in ett lånebelopp av minst 1.");
+    }
+    if (!isValidNumber(interestRate) ||
+        parseFloat(interestRate) < 0 ||
+        parseFloat(interestRate) > 100) {
+        errorMessages.push("Skriv in ett ränteantal mellan 0-100%.");
+    }
+    if (!isValidPositiveNumber(loanTerm) ||
+        parseFloat(loanTerm) <= 0 ||
+        parseFloat(loanTerm) > 80) {
+        errorMessages.push("Skriv in en realistisk återbetalningsperiod.");
+    }
+    return errorMessages;
+}
 // Function to calculate the mortgage
 function calculateMortgage(event) {
     event.preventDefault();
-    // Extracts values from input field and parsing them as floating point numbers
-    var mortgageAmount = parseFloat(mortgageAmountInput.value);
-    var interestRate = parseFloat(interestRateInput.value);
-    var loanTerm = parseFloat(loanTermInput.value);
-    // ---------------------------- //
-    // Code for invalid inputs     //
-    // -------------------------- //
-    // Array to store potential error messages
-    var invalidInput = [];
-    // If validation with error message to prevent negative or unrealistic numbers for inputs
-    if (mortgageAmount <= 0) {
-        invalidInput.push("Skriv in ett lånebelopp av minst 1.");
-    }
-    if (interestRate < 0 || interestRate > 100) {
-        invalidInput.push("Skriv in ett ränteantal mellan 0-100%.");
-    }
-    if (loanTerm <= 0 || loanTerm > 80) {
-        invalidInput.push("Skriv in en realistisk återbetalningsperiod.");
-    }
-    // Validates and displays multiple error messages at once for multiple input fields
-    if (invalidInput.length > 0) {
-        var errorMessages = invalidInput
+    // Fetching values from input field
+    var mortgageAmount = mortgageAmountInput.value;
+    var interestRate = interestRateInput.value;
+    var loanTerm = loanTermInput.value;
+    // Validates input values
+    var errorMessages = validateInputs(mortgageAmount, interestRate, loanTerm);
+    // Displaying error messages if input validation fails
+    if (errorMessages.length > 0) {
+        // Generates list of errors messages
+        var errorList = errorMessages
             .map(function (message) { return "<li>".concat(message, "</li>"); })
             .join("");
-        summaryDisplay.innerHTML = "<span class='error-message'>Fel:<br><ul>".concat(errorMessages, "</ul></span>");
+        // Shows error message in summary
+        summaryDisplay.innerHTML = "<span class='error-message'>Fel:<br><ul>".concat(errorList, "</ul></span>");
         return;
     }
     // ---------------------------- //
-    // Code for calculations       //
+    // Code for math calculations  //
     // -------------------------- //
+    var mortgageAmountValue = parseFloat(mortgageAmount);
+    var interestRateValue = parseFloat(interestRate);
+    var loanTermValue = parseFloat(loanTerm);
     // Calculates monthly interest rate and total number for the loan
-    var monthlyInterestRate = interestRate / 100 / 12;
-    var loanTermMonths = loanTerm * 12;
+    var monthlyInterestRate = interestRateValue / 100 / 12;
+    var loanTermMonths = loanTermValue * 12;
     // Calculates the monthly mortgage payment using the math formula
-    var mortgage = (mortgageAmount *
+    var mortgage = (mortgageAmountValue *
         monthlyInterestRate *
         Math.pow(1 + monthlyInterestRate, loanTermMonths)) /
         (Math.pow(1 + monthlyInterestRate, loanTermMonths) - 1);
     // Calculates total payment & interest over the loan term
     var totalPayment = mortgage * loanTermMonths;
-    var totalInterest = totalPayment - mortgageAmount;
-    var remainingLoan = mortgageAmount;
+    var totalInterest = totalPayment - mortgageAmountValue;
+    var remainingLoan = mortgageAmountValue;
     // Array to store the amortized plan
     var amortizationPlan = [];
     // Calculating payments, principal, interest, and remaining loan balance for each month to generate amort

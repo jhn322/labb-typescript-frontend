@@ -14,66 +14,107 @@ const tableElement = document.getElementById(
   "amortizationTable"
 ) as HTMLTableElement;
 
+// Interface for amortization plan
+interface AmortizationPlan {
+  month: number;
+  payment: number;
+  principal: number;
+  interest: number;
+  remainingLoan: number;
+}
+
+// Function to validate if a string represents a valid number
+function isValidNumber(value: string): boolean {
+  return !isNaN(parseFloat(value)) && isFinite(parseFloat(value));
+}
+
+// Function to validate if a string represents a positive number
+function isValidPositiveNumber(value: string): boolean {
+  const parsed = parseFloat(value);
+  return !isNaN(parsed) && isFinite(parsed) && parsed > 0;
+}
+
+// Function to validate input values
+function validateInputs(
+  mortgageAmount: string,
+  interestRate: string,
+  loanTerm: string
+): string[] {
+  const errorMessages: string[] = [];
+
+  // Different if statements for error messages
+  if (!isValidPositiveNumber(mortgageAmount)) {
+    errorMessages.push("Skriv in ett lånebelopp av minst 1.");
+  }
+
+  if (
+    !isValidNumber(interestRate) ||
+    parseFloat(interestRate) < 0 ||
+    parseFloat(interestRate) > 100
+  ) {
+    errorMessages.push("Skriv in ett ränteantal mellan 0-100%.");
+  }
+
+  if (
+    !isValidPositiveNumber(loanTerm) ||
+    parseFloat(loanTerm) <= 0 ||
+    parseFloat(loanTerm) > 80
+  ) {
+    errorMessages.push("Skriv in en realistisk återbetalningsperiod.");
+  }
+
+  return errorMessages;
+}
+
 // Function to calculate the mortgage
 function calculateMortgage(event: Event) {
   event.preventDefault();
 
-  // Extracts values from input field and parsing them as floating point numbers
-  const mortgageAmount = parseFloat(mortgageAmountInput.value);
-  const interestRate = parseFloat(interestRateInput.value);
-  const loanTerm = parseFloat(loanTermInput.value);
+  // Fetching values from input field
+  const mortgageAmount = mortgageAmountInput.value;
+  const interestRate = interestRateInput.value;
+  const loanTerm = loanTermInput.value;
 
-  // ---------------------------- //
-  // Code for invalid inputs     //
-  // -------------------------- //
+  // Validates input values
+  const errorMessages = validateInputs(mortgageAmount, interestRate, loanTerm);
 
-  // Array to store potential error messages
-  const invalidInput = [];
-
-  // If validation with error message to prevent negative or unrealistic numbers for inputs
-  if (mortgageAmount <= 0) {
-    invalidInput.push("Skriv in ett lånebelopp av minst 1.");
-  }
-
-  if (interestRate < 0 || interestRate > 100) {
-    invalidInput.push("Skriv in ett ränteantal mellan 0-100%.");
-  }
-
-  if (loanTerm <= 0 || loanTerm > 80) {
-    invalidInput.push("Skriv in en realistisk återbetalningsperiod.");
-  }
-
-  // Validates and displays multiple error messages at once for multiple input fields
-  if (invalidInput.length > 0) {
-    const errorMessages = invalidInput
+  // Displaying error messages if input validation fails
+  if (errorMessages.length > 0) {
+    // Generates list of errors messages
+    const errorList = errorMessages
       .map((message) => `<li>${message}</li>`)
       .join("");
-    summaryDisplay.innerHTML = `<span class='error-message'>Fel:<br><ul>${errorMessages}</ul></span>`;
+    // Shows error message in summary
+    summaryDisplay.innerHTML = `<span class='error-message'>Fel:<br><ul>${errorList}</ul></span>`;
     return;
   }
 
   // ---------------------------- //
-  // Code for calculations       //
+  // Code for math calculations  //
   // -------------------------- //
 
+  const mortgageAmountValue = parseFloat(mortgageAmount);
+  const interestRateValue = parseFloat(interestRate);
+  const loanTermValue = parseFloat(loanTerm);
+
   // Calculates monthly interest rate and total number for the loan
-  const monthlyInterestRate = interestRate / 100 / 12;
-  const loanTermMonths = loanTerm * 12;
+  const monthlyInterestRate = interestRateValue / 100 / 12;
+  const loanTermMonths = loanTermValue * 12;
 
   // Calculates the monthly mortgage payment using the math formula
   const mortgage =
-    (mortgageAmount *
+    (mortgageAmountValue *
       monthlyInterestRate *
       Math.pow(1 + monthlyInterestRate, loanTermMonths)) /
     (Math.pow(1 + monthlyInterestRate, loanTermMonths) - 1);
 
   // Calculates total payment & interest over the loan term
   const totalPayment = mortgage * loanTermMonths;
-  const totalInterest = totalPayment - mortgageAmount;
+  const totalInterest = totalPayment - mortgageAmountValue;
 
-  let remainingLoan = mortgageAmount;
+  let remainingLoan = mortgageAmountValue;
   // Array to store the amortized plan
-  const amortizationPlan = [];
+  const amortizationPlan: AmortizationPlan[] = [];
 
   // Calculating payments, principal, interest, and remaining loan balance for each month to generate amort
   for (let i = 1; i <= loanTermMonths; i++) {
@@ -88,7 +129,7 @@ function calculateMortgage(event: Event) {
       payment: mortgage,
       principal: principalPayment,
       interest: interestPayment,
-      remainingLoan: remainingLoan,
+      remainingLoan,
     });
   }
 
