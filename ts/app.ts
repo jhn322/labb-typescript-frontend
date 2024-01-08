@@ -113,6 +113,7 @@ function calculateMortgage(event: Event) {
   const totalInterest = totalPayment - mortgageAmountValue;
 
   let remainingLoan = mortgageAmountValue;
+
   // Array to store the amortized plan
   const amortizationPlan: AmortizationPlan[] = [];
 
@@ -137,28 +138,52 @@ function calculateMortgage(event: Event) {
   // Code for summary displayed  //
   // -------------------------- //
 
-  // Summary text
-  const summaryText = `
+  // Generates the summary text with the "generateSummaryText" function
+  const summaryText = generateSummaryText(mortgage, totalInterest, loanTerm);
+
+  // Sets the HTML content to the generated summary text
+  summaryDisplay.innerHTML = summaryText;
+
+  // Generates the amortization table using the "generateAmortizationTable" function
+  const tableContent = generateAmortizationTable(amortizationPlan);
+
+  // Fetches the empty "tableBody" id/div from HTML
+  const tableBody = document.getElementById(
+    "tableBody"
+  ) as HTMLTableSectionElement;
+
+  // Sets the HTML content to the generated table
+  tableBody.innerHTML = tableContent;
+
+  // Makes the table visible
+  tableElement.style.display = "table";
+
+  // Function to generate summary text
+  function generateSummaryText(
+    mortgage: number,
+    totalInterest: number,
+    loanTerm: string
+  ): string {
+    return `
     Resultat: <strong>${mortgage.toFixed(2)} kr/månad.</strong><br>
     Totala räntekostnaden: <strong>${totalInterest.toFixed(
       2
     )} kr</strong> över <strong>${loanTerm} år.</strong><br>
     Amorteringsplan:
-`;
-
-  // Initilize the summary text for display
-  summaryDisplay.innerHTML = summaryText;
+  `;
+  }
 
   // ---------------------------- //
   // Code for amortazation table //
   // -------------------------- //
 
-  // Stores the table
-  let output = "";
-
-  // Generates table for amortazation plan
-  amortizationPlan.forEach((payment) => {
-    output += `
+  // Function to generate amortization table
+  function generateAmortizationTable(
+    amortizationPlan: AmortizationPlan[]
+  ): string {
+    let output = "";
+    amortizationPlan.forEach((payment) => {
+      output += `
       <tr>
         <td>${payment.month}</td>
         <td>${payment.payment.toFixed(2)}</td>
@@ -166,18 +191,9 @@ function calculateMortgage(event: Event) {
         <td>${payment.principal.toFixed(2)}</td>
         <td>${payment.remainingLoan.toFixed(2)}</td>
       </tr>`;
-  });
-
-  // Retrieves the table from HTML by ID
-  const tableBody = document.getElementById(
-    "tableBody"
-  ) as HTMLTableSectionElement;
-
-  // Sets the HTML content of the table to the generated output
-  tableBody.innerHTML = output;
-
-  // Changes the table to visible by setting its display style property to 'table'
-  tableElement.style.display = "table";
+    });
+    return output;
+  }
 }
 
 // Adds an eventListener to the mortgage form to trigger the function when user submit
