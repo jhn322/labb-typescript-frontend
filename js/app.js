@@ -20,18 +20,20 @@ function isValidPositiveNumber(value) {
 function validateInputs(mortgageAmount, interestRate, loanTerm) {
     const errorMessages = [];
     // Different if statements for error messages
-    if (!isValidPositiveNumber(mortgageAmount)) {
-        errorMessages.push("Skriv in ett lånebelopp av minst 1.");
+    if (!isValidPositiveNumber(mortgageAmount) ||
+        parseFloat(mortgageAmount) < 1 ||
+        parseFloat(mortgageAmount) > 50000000) {
+        errorMessages.push("Skriv in ett lånebelopp mellan 1 och 50000000kr");
     }
     if (!isValidNumber(interestRate) ||
-        parseFloat(interestRate) < 0 ||
+        parseFloat(interestRate) < 0.1 ||
         parseFloat(interestRate) > 100) {
-        errorMessages.push("Skriv in ett ränteantal mellan 0-100%.");
+        errorMessages.push("Skriv in ett ränteantal mellan 0.1-100%.");
     }
     if (!isValidPositiveNumber(loanTerm) ||
-        parseFloat(loanTerm) <= 0 ||
-        parseFloat(loanTerm) > 80) {
-        errorMessages.push("Skriv in en realistisk återbetalningsperiod.");
+        parseFloat(loanTerm) < 0.1 ||
+        parseFloat(loanTerm) > 70) {
+        errorMessages.push("Skriv in en återbetalningsperiod mellan 0.1-70år.");
     }
     return errorMessages;
 }
@@ -106,7 +108,7 @@ function calculateMortgage(event) {
     // Function to generate summary text
     function generateSummaryText(mortgage, totalInterest, loanTerm) {
         return `
-    Resultat: <strong>${mortgage.toFixed(2)} kr/månad.</strong><br>
+    Bolånet blir: <strong>${mortgage.toFixed(2)} kr/månad.</strong><br>
     Totala räntekostnaden: <strong>${totalInterest.toFixed(2)} kr</strong> över <strong>${loanTerm} år.</strong><br>
     Amorteringsplan:
   `;
