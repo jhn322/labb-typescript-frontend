@@ -6,9 +6,9 @@ Johan Söderlund
 
 ### Länk till webbsidan:
 
-[GitHub Pages](https://jhn322.github.io/typescript-frontend/)
+[GitHub Pages](https://jhn322.github.io/labb-typescript-frontend/)
 
-[Netlify](https://jhn-typescript.netlify.app/)
+[Netlify](https://jhn-labb-typescript.netlify.app/)
 
 ## Information:
 
